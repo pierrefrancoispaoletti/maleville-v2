@@ -1,8 +1,11 @@
 {
-  "name": "maleville-form-v2",
+  "name": "maleville-form-v2-da",
+  "homepage": "/maleville/_ClientSpecific/React-form-DA/react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
     "@mui/styled-engine-sc": "^5.11.9",
@@ -18,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "BUILD_PATH='./back/react' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
