@@ -5,14 +5,17 @@ import {
   TableHead,
   TableRow,
   TextField,
+  useTheme,
 } from "@mui/material";
 import {
   AddressBlock,
   ContainerWrapper,
+  TableCellStyled,
   TableContainerStyled,
 } from "./header.style";
 
 const Header = ({
+  titre,
   fournisseurs,
   projets,
   user,
@@ -26,7 +29,6 @@ const Header = ({
   NCommande,
 }) => {
   const { FirstName, LastName } = user;
-
   const handleChangeFournisseur = (e, newValue, reason) => {
     if (reason === "clear") {
       setFournisseur({});
@@ -39,12 +41,10 @@ const Header = ({
     }
     setProjet(newValue);
   };
-
   const handleChangeReference = (e) => {
     const { value } = e.target;
     setReference(value);
   };
-
   const defaultPropsProjet = {
     getOptionLabel: (option) => {
       if (Object.keys(option).length === 0 || !option) {
@@ -53,7 +53,6 @@ const Header = ({
       return option?.label;
     },
   };
-
   const defaultProps = {
     getOptionLabel: (option) => {
       if (Object.keys(option).length === 0 || !option) {
@@ -62,6 +61,7 @@ const Header = ({
       return option?.nom;
     },
   };
+
   return (
     <ContainerWrapper>
       <div>
@@ -74,10 +74,10 @@ const Header = ({
         </div>
         <div>
           <TableContainerStyled>
-            <Table sx={{}} aria-label="simple table">
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>N Commande</TableCell>
+                  <TableCellStyled>N Commande</TableCellStyled>
                   <TableCell align="right">
                     {NCommande.length > 0
                       ? NCommande
@@ -85,7 +85,7 @@ const Header = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Code projet</TableCell>
+                  <TableCellStyled>Code projet</TableCellStyled>
                   <TableCell align="right">
                     <Autocomplete
                       {...defaultPropsProjet}
@@ -102,11 +102,11 @@ const Header = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Nom du projet</TableCell>
+                  <TableCellStyled>Nom du projet</TableCellStyled>
                   <TableCell align="right">{projet?.nom}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Référence</TableCell>
+                  <TableCellStyled>Référence</TableCellStyled>
                   <TableCell align="right">
                     <TextField
                       value={reference}
@@ -115,7 +115,7 @@ const Header = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Demandeur</TableCell>
+                  <TableCellStyled>Demandeur</TableCellStyled>
                   <TableCell align="right">{`${FirstName} ${LastName}`}</TableCell>
                 </TableRow>
               </TableHead>
@@ -124,7 +124,9 @@ const Header = ({
         </div>
       </div>
       <div>
-        <h1>Demande d'achat(s)</h1>
+        <ContainerWrapper>
+          <h1>{titre}</h1>
+        </ContainerWrapper>
         <div>
           <div>
             <Autocomplete

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect } from "react";
+import { TableContainerStyled } from "../Header/header.style";
 
 const articleModele = {
   fournisseur: {},
@@ -24,22 +25,16 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
     setArticlesList([{ ...articleModele }]);
   }, []);
 
-  const handleChangeFournisseur = (index) => (e, newValue, reason) => {
-    const newArticleList = [...articlesList];
-    if (reason === "clear") {
-      newArticleList[index].fournisseur = {};
-    } else {
-      newArticleList[index].fournisseur = newValue;
-    }
-    setArticlesList(newArticleList);
-  };
+  const handleChangeItem = (index) => (e, newValue, reason) => {
+    const { id } = e.target;
+    const type = id.split("-")[0];
 
-  const handleChangeArticle = (index) => (e, newValue, reason) => {
+    console.log(type);
     const newArticleList = [...articlesList];
     if (reason === "clear") {
-      newArticleList[index].article = {};
+      newArticleList[index][type] = {};
     } else {
-      newArticleList[index].article = newValue;
+      newArticleList[index][type] = newValue;
     }
     setArticlesList(newArticleList);
   };
@@ -71,7 +66,7 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
     },
   };
   return (
-    <TableContainer>
+    <TableContainerStyled>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           variant="contained"
@@ -100,10 +95,9 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
                   <div>
                     <Autocomplete
                       {...defaultProps}
-                      disablePortal
                       id={`fournisseur-select_${index}`}
                       options={fournisseurs}
-                      onChange={handleChangeFournisseur(index)}
+                      onChange={handleChangeItem(index)}
                       value={fournisseur}
                       sx={{ width: 200 }}
                       renderInput={(params) => {
@@ -119,10 +113,9 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
                   <div>
                     <Autocomplete
                       {...defaultProps}
-                      disablePortal
                       id={`article-select_${index}`}
                       options={articles}
-                      onChange={handleChangeArticle(index)}
+                      onChange={handleChangeItem(index)}
                       value={article}
                       sx={{ width: 300 }}
                       renderInput={(params) => {
@@ -169,7 +162,7 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
           })}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainerStyled>
   );
 };
 

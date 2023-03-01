@@ -1,4 +1,13 @@
-import { Alert, Button, Container, Divider, Snackbar } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Container,
+  createTheme,
+  CssBaseline,
+  Divider,
+  Snackbar,
+  ThemeProvider,
+} from "@mui/material";
 import Form from "../Form/Form";
 import Header from "../Header/Header";
 import {
@@ -13,6 +22,7 @@ import {
 } from "../../dummy-datas/data";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { MaterialUISwitch } from "./app.style";
 
 var fournisseursFromBack = window.fournisseurs ?? fournisseurs;
 var projetsFromBack = window.projets ?? projets;
@@ -29,6 +39,18 @@ var editedDocumentDataFromBack = window.formdata ?? editedDocumentData;
 
 var nCommandeFromBack = window.nCommande ?? nCommande;
 
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
+
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
+
 const App = () => {
   const [initialState, setInitialState] = useState({});
   const [projet, setProjet] = useState({});
@@ -36,6 +58,7 @@ const App = () => {
   const [articlesList, setArticlesList] = useState([]);
   const [reference, setReference] = useState("");
   const [message, setMessage] = useState({});
+  const [theme, setTheme] = useState(lightTheme);
 
   const submitData = async (collId, typeDoc) => {
     let newState = { ...initialState };
@@ -86,6 +109,14 @@ const App = () => {
     setMessage({});
   };
 
+  const handleChangeTheme = () => {
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === lightTheme ? darkTheme : lightTheme;
+      localStorage.setItem("theme", newTheme.palette.mode);
+      return newTheme;
+    });
+  };
+
   useEffect(() => {
     if (edit) {
       const formDatas = JSON.parse(editedDocumentDataFromBack);
@@ -95,64 +126,84 @@ const App = () => {
       setArticlesList(formDatas.articlesList);
       setReference(formDatas.reference);
     }
+    if (localStorage.getItem("theme") === "dark") {
+      setTheme(darkTheme);
+      localStorage.setItem("theme", "dark");
+    }
+    if (localStorage.getItem("theme") === "light") {
+      setTheme(lightTheme);
+      localStorage.setItem("theme", "light");
+    }
   }, []);
 
   return (
-    <Container>
-      <Header
-        fournisseurs={fournisseursFromBack}
-        projets={projetsFromBack}
-        setProjet={setProjet}
-        projet={projet}
-        setFournisseur={setFournisseur}
-        fournisseur={fournisseur}
-        user={userFromBack}
-        reference={reference}
-        setReference={setReference}
-        edit={edit}
-        NCommande={nCommandeFromBack}
-      />
-      <Divider sx={{ margin: "20px" }} />
-      <Form
-        fournisseurs={fournisseursFromBack}
-        articles={articlesFromBack}
-        articlesList={articlesList}
-        setArticlesList={setArticlesList}
-      />
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "20px",
-        }}
-      >
-        <Button
-          type="button"
-          onClick={handleSendDatas}
-          color="success"
-          variant="outlined"
-        >
-          Soumettre
-        </Button>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <MaterialUISwitch
+          sx={{ m: 1 }}
+          checked={theme === lightTheme}
+          onClick={handleChangeTheme}
+          theme={theme}
+        />
       </Container>
-      {Object.keys(message).length > 0 && (
-        <Snackbar
-          open={Object.keys(message).length > 0 ? true : false}
-          autoHideDuration={6000}
-          onClose={handleCloseAlertMessage}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      <Container>
+        <Header
+          fournisseurs={fournisseursFromBack}
+          projets={projetsFromBack}
+          setProjet={setProjet}
+          projet={projet}
+          setFournisseur={setFournisseur}
+          fournisseur={fournisseur}
+          user={userFromBack}
+          reference={reference}
+          setReference={setReference}
+          edit={edit}
+          NCommande={nCommandeFromBack}
+          titre={"Demande d'achat(s)"}
+        />
+        <Divider sx={{ margin: "20px" }} />
+        <Form
+          fournisseurs={fournisseursFromBack}
+          articles={articlesFromBack}
+          articlesList={articlesList}
+          setArticlesList={setArticlesList}
+        />
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "20px",
+          }}
         >
-          <Alert
-            onClose={handleCloseAlertMessage}
-            severity={message.success ? "success" : "error"}
-            sx={{ width: "100%" }}
+          <Button
+            type="button"
+            onClick={handleSendDatas}
+            color="success"
+            variant="outlined"
           >
-            {message.message}
-          </Alert>
-        </Snackbar>
-      )}
-    </Container>
+            Soumettre
+          </Button>
+        </Container>
+        {Object.keys(message).length > 0 && (
+          <Snackbar
+            open={Object.keys(message).length > 0 ? true : false}
+            autoHideDuration={6000}
+            onClose={handleCloseAlertMessage}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <Alert
+              onClose={handleCloseAlertMessage}
+              severity={message.success ? "success" : "error"}
+              sx={{ width: "100%" }}
+            >
+              {message.message}
+            </Alert>
+          </Snackbar>
+        )}
+      </Container>
+    </ThemeProvider>
   );
 };
 
