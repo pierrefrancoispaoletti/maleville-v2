@@ -150,7 +150,6 @@ const App = () => {
   useEffect(() => {
     if (edit) {
       const formDatas = JSON.parse(editedDocumentDataFromBack);
-      console.log(formDatas);
       setProjet(formDatas.projet);
       setFournisseur(formDatas.fournisseur);
       setArticlesList(formDatas.articlesList);
