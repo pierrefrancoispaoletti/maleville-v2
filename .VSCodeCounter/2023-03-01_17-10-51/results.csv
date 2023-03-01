@@ -1,0 +1,16 @@
+"filename", "language", "JavaScript", "CSS", "comment", "blank", "total"
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/App/App.css", "CSS", 0, 0, 0, 1, 1
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/App/App.js", "JavaScript", 246, 0, 0, 24, 270
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/App/app.style.js", "JavaScript", 49, 0, 0, 3, 52
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/Commentaire/Commentaire.js", "JavaScript", 20, 0, 0, 3, 23
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/Form/Form.js", "JavaScript", 167, 0, 0, 11, 178
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/Form/form.style.js", "JavaScript", 7, 0, 0, 2, 9
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/Header/Header.js", "JavaScript", 181, 0, 0, 4, 185
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/Header/header.style.js", "JavaScript", 48, 0, 0, 7, 55
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/TVA/Options/Options.js", "JavaScript", 34, 0, 0, 4, 38
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/TVA/TVACalculator/TVACalculator.js", "JavaScript", 76, 0, 0, 4, 80
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/components/TVA/TotalTVA/TotalTVA.js", "JavaScript", 81, 0, 0, 3, 84
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/dummy-datas/data.js", "JavaScript", 179, 0, 0, 8, 187
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/index.css", "CSS", 0, 16, 0, 3, 19
+"/Users/pierrefrancoispaoletti/Desktop/maleville-v2/src/index.js", "JavaScript", 6, 0, 0, 2, 8
+"Total", "-", 1094, 16, 0, 79, 1189

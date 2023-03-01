@@ -5,7 +5,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   TextField,
@@ -15,9 +14,9 @@ import { useEffect } from "react";
 import { TableContainerStyled } from "../Header/header.style";
 
 const articleModele = {
-  fournisseur: {},
   qte: "",
   article: {},
+  prix: "",
 };
 
 const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
@@ -28,8 +27,6 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
   const handleChangeItem = (index) => (e, newValue, reason) => {
     const { id } = e.target;
     const type = id.split("-")[0];
-
-    console.log(type);
     const newArticleList = [...articlesList];
     if (reason === "clear") {
       newArticleList[index][type] = {};
@@ -43,6 +40,13 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
     const { value } = e.target;
     const newArticleList = [...articlesList];
     newArticleList[index].qte = value;
+    setArticlesList(newArticleList);
+  };
+
+  const handleChangePrix = (index) => (e) => {
+    const { value } = e.target;
+    const newArticleList = [...articlesList];
+    newArticleList[index].prix = value;
     setArticlesList(newArticleList);
   };
 
@@ -79,33 +83,19 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Fournisseur</TableCell>
             <TableCell>Ref Fournisseur</TableCell>
             <TableCell>Description</TableCell>
             <TableCell align="center">Qté</TableCell>
+            <TableCell align="center">Prix HT</TableCell>
+            <TableCell>Total</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody id="table_body">
           {articlesList.map((articleElement, index) => {
-            const { fournisseur, qte, article } = articleElement;
+            const { qte, article, prix } = articleElement;
             return (
               <TableRow key={index} id={`table_row_${index}`}>
-                <TableCell component="th" scope="row">
-                  <div>
-                    <Autocomplete
-                      {...defaultProps}
-                      id={`fournisseur-select_${index}`}
-                      options={fournisseurs}
-                      onChange={handleChangeItem(index)}
-                      value={fournisseur}
-                      sx={{ width: 200 }}
-                      renderInput={(params) => {
-                        return <TextField {...params} label="Fournisseurs" />;
-                      }}
-                    />
-                  </div>
-                </TableCell>
                 <TableCell component="th" scope="row">
                   <div id={`article-ref_${index}`}>{article?.label}</div>
                 </TableCell>
@@ -127,7 +117,7 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
                 <TableCell component="th" scope="row" align="center">
                   <div>
                     <TextField
-                      id={`article-qte${index}`}
+                      id={`article-qte_${index}`}
                       value={qte}
                       type="number"
                       inputProps={{ min: 0 }}
@@ -136,6 +126,22 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
                       onChange={handleChangeQuantite(index)}
                     ></TextField>
                   </div>
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  <div>
+                    <TextField
+                      id={`article-prix_${index}`}
+                      value={prix}
+                      type="number"
+                      inputProps={{ min: 0 }}
+                      placeholder="0"
+                      variant="filled"
+                      onChange={handleChangePrix(index)}
+                    ></TextField>
+                  </div>
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  <div>{isNaN(prix * qte) ? 0 : (prix * qte).toFixed(2)}</div>
                 </TableCell>
                 {index !== 0 && (
                   <TableCell component="th" scope="row">

@@ -23,6 +23,10 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { MaterialUISwitch } from "./app.style";
+import Commentaire from "../Commentaire/Commentaire";
+import Options from "../TVA/Options/Options";
+import TVACalculatorComponent from "../TVA/TVACalculator/TVACalculator";
+import TotalTVA from "../TVA/TotalTVA/TotalTVA";
 
 var fournisseursFromBack = window.fournisseurs ?? fournisseurs;
 var projetsFromBack = window.projets ?? projets;
@@ -58,6 +62,23 @@ const App = () => {
   const [articlesList, setArticlesList] = useState([]);
   const [reference, setReference] = useState("");
   const [message, setMessage] = useState({});
+  const [commentaire, setCommentaire] = useState("");
+  const [options, setOptions] = useState({
+    30: false,
+    50: false,
+    "cash-pistache": false,
+  });
+  const [TVACalculator, setTVACalculator] = useState({
+    taux: 0,
+    base: 0,
+    TVA: 0,
+  });
+
+  const [totaux, setTotaux] = useState({
+    port: 0,
+    net: 0,
+  });
+
   const [theme, setTheme] = useState(lightTheme);
 
   const submitData = async (collId, typeDoc) => {
@@ -69,6 +90,11 @@ const App = () => {
     newState.collId = collIdFromBack;
     newState.typeDoc = typeDocFromBack;
     newState.reference = reference;
+    newState.commentaire = commentaire;
+    newState.options = options;
+    newState.TVACalculator = TVACalculator;
+    newState.totaux = totaux;
+
     setInitialState({ ...newState });
 
     const response = await axios({
@@ -89,6 +115,10 @@ const App = () => {
       setArticlesList([]);
       setReference("");
       setInitialState({});
+      setCommentaire("");
+      setOptions({ 30: false, 50: false, "cash-pistache": false });
+      TVACalculator({ taux: 0, base: 0, TVA: 0 });
+      setTotaux({ port: 0, net: 0 });
     } else {
       setMessage({
         success: false,
@@ -160,8 +190,37 @@ const App = () => {
           setReference={setReference}
           edit={edit}
           NCommande={nCommandeFromBack}
-          titre={"Demande d'achat(s)"}
+          titre={"Bon de commande"}
         />
+        <Divider sx={{ margin: "20px" }} />
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Commentaire
+            commentaire={commentaire}
+            setCommentaire={setCommentaire}
+          />
+          <Divider orientation="vertical" flexItem />
+          <Options options={options} setOptions={setOptions} />
+          <Divider orientation="vertical" flexItem />
+          <TVACalculatorComponent
+            TVACalculator={TVACalculator}
+            setTVACalculator={setTVACalculator}
+            articlesList={articlesList}
+          />
+        </Container>
+        <Divider sx={{ margin: "20px" }} />
+        <Container>
+          <TotalTVA
+            totaux={totaux}
+            setTotaux={setTotaux}
+            TVACalculator={TVACalculator}
+          />
+        </Container>
         <Divider sx={{ margin: "20px" }} />
         <Form
           fournisseurs={fournisseursFromBack}
