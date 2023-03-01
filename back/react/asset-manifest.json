@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/maleville/_ClientSpecific/React-form-DA/react/static/css/main.45e3aab7.css",
+    "main.js": "/maleville/_ClientSpecific/React-form-DA/react/static/js/main.2a5e9e20.js",
+    "index.html": "/maleville/_ClientSpecific/React-form-DA/react/index.html",
+    "main.45e3aab7.css.map": "/maleville/_ClientSpecific/React-form-DA/react/static/css/main.45e3aab7.css.map",
+    "main.2a5e9e20.js.map": "/maleville/_ClientSpecific/React-form-DA/react/static/js/main.2a5e9e20.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45e3aab7.css",
+    "static/js/main.2a5e9e20.js"
+  ]
+}

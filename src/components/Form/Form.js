@@ -11,7 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const articleModele = {
   fournisseur: {},
@@ -19,13 +19,10 @@ const articleModele = {
   article: {},
 };
 
-const Form = ({ fournisseurs, articles }) => {
-  const [articlesList, setArticlesList] = useState([]);
+const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
   useEffect(() => {
     setArticlesList([{ ...articleModele }]);
   }, []);
-
-  console.log(articlesList);
 
   const handleChangeFournisseur = (index) => (e, newValue, reason) => {
     const newArticleList = [...articlesList];
@@ -70,7 +67,7 @@ const Form = ({ fournisseurs, articles }) => {
       if (Object.keys(option).length === 0 || !option) {
         return "";
       }
-      return option?.label;
+      return option?.nom;
     },
   };
   return (
