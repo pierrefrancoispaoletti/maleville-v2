@@ -28,6 +28,7 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
     const { id } = e.target;
     const type = id.split("-")[0];
     const newArticleList = [...articlesList];
+    newArticleList[index]["prix"] = newValue.prix ?? "";
     if (reason === "clear") {
       newArticleList[index][type] = {};
     } else {

@@ -63,34 +63,44 @@ export const fournisseurs = [
 ];
 
 export const articles = [
-  { id: 0, label: "ADJU0001", nom: "Adjuvant pour peinture" },
-  { id: 1, label: "ADSL0001", nom: "ADSL 298/4P blanc, L.5 m" },
+  { id: 0, label: "ADJU0001", nom: "Adjuvant pour peinture", prix: "10.75" },
+  { id: 1, label: "ADSL0001", nom: "ADSL 298/4P blanc, L.5 m", prix: "10.75" },
   {
     id: 2,
     label: "CABL0001",
     nom: "C\u00e2ble \u00e9lectrique RJ45 bleu, L.50 m",
+    prix: "10.75",
   },
   {
     id: 3,
     label: "CARR0001",
     nom: "Carrelage sol et mur effet bois Helsinka l.20 x L.60 cm",
+    prix: "10.75",
   },
   {
     id: 4,
     label: "CARR0002",
     nom: "Carrelage sol effet b\u00e9ton Alma l.45 x L.45 cm",
+    prix: "10.75",
   },
   {
     id: 5,
     label: "CARR0003",
     nom: "Carrelage sol et mur effet marbre Rimini l.60 x L.60 cm",
+    prix: "10.75",
   },
   {
     id: 6,
     label: "CARR0004",
     nom: "Carrelage sol effet pierre Dolce vita l.47.2 x L.47.2 cm",
+    prix: "10.75",
   },
-  { id: 7, label: "CIME0001", nom: "Ciment pro gris NF 32.5, 35 kg" },
+  {
+    id: 7,
+    label: "CIME0001",
+    nom: "Ciment pro gris NF 32.5, 35 kg",
+    prix: "10.75",
+  },
   {
     id: 8,
     label: "DISJ0001",
