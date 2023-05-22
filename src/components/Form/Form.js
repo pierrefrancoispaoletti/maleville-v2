@@ -108,6 +108,7 @@ const Form = ({ fournisseurs, articles, articlesList, setArticlesList }) => {
                       options={articles}
                       onChange={handleChangeItem(index)}
                       value={article}
+                      disablePortal
                       sx={{ width: 300 }}
                       renderInput={(params) => {
                         return <TextField {...params} label="Articles" />;

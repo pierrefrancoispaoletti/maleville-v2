@@ -28,6 +28,8 @@ import Options from "../TVA/Options/Options";
 import TVACalculatorComponent from "../TVA/TVACalculator/TVACalculator";
 import TotalTVA from "../TVA/TotalTVA/TotalTVA";
 
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+
 var fournisseursFromBack = window.fournisseurs ?? fournisseurs;
 var projetsFromBack = window.projets ?? projets;
 var articlesFromBack = window.articles ?? articles;
@@ -81,7 +83,15 @@ const App = () => {
 
   const [theme, setTheme] = useState(lightTheme);
 
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleChangeFiles = (e) => {
+    const arrayOfFiles = Array.from(e.target.files);
+    setSelectedFiles([...selectedFiles, ...arrayOfFiles]);
+  };
+
   const submitData = async (collId, typeDoc) => {
+    let formData = new FormData();
     let newState = { ...initialState };
     newState.projet = projet;
     newState.fournisseur = fournisseur;
@@ -94,13 +104,18 @@ const App = () => {
     newState.options = options;
     newState.TVACalculator = TVACalculator;
     newState.totaux = totaux;
-
     setInitialState({ ...newState });
+    formData.append("data", JSON.stringify(newState));
+    if (selectedFiles.length > 0) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("file" + i, selectedFiles[i]);
+      }
+    }
 
     const response = await axios({
       method: "POST",
       url: `traitement.php?coll_id=${collId}&type_doc=${typeDoc}&edit=${edit}`,
-      data: newState,
+      data: formData,
     });
 
     const { data } = response;
@@ -117,8 +132,9 @@ const App = () => {
       setInitialState({});
       setCommentaire("");
       setOptions({ 30: false, 50: false, "cash-pistache": false });
-      TVACalculator({ taux: 0, base: 0, TVA: 0 });
+      setTVACalculator({ taux: 0, base: 0, TVA: 0 });
       setTotaux({ port: 0, net: 0 });
+      setSelectedFiles([]);
     } else {
       setMessage({
         success: false,
@@ -235,14 +251,59 @@ const App = () => {
             margin: "20px",
           }}
         >
-          <Button
-            type="button"
-            onClick={handleSendDatas}
-            color="success"
-            variant="outlined"
-          >
-            Soumettre
-          </Button>
+          {selectedFiles.length > 0 && (
+            <Container
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {selectedFiles.map((file, index) => (
+                <Button
+                  key={index}
+                  variant="contained"
+                  color="warning"
+                  fullWidth
+                  sx={{ margin: "10px" }}
+                  onClick={() =>
+                    setSelectedFiles(
+                      selectedFiles.filter(
+                        (selectedFile) => selectedFile !== file
+                      )
+                    )
+                  }
+                >
+                  Supprimer {file.name}
+                </Button>
+              ))}
+            </Container>
+          )}
+          <Container sx={{ display: "flex", justifyContent: "space-around" }}>
+            <Button
+              type="button"
+              onClick={handleSendDatas}
+              color="success"
+              variant="outlined"
+            >
+              Soumettre
+            </Button>
+            <Button
+              variant="contained"
+              component="label"
+              startIcon={<AttachFileIcon />}
+            >
+              Joindre des documents
+              <input
+                hidden
+                accept="*/*"
+                multiple
+                name="file"
+                type="file"
+                onChange={handleChangeFiles}
+              />
+            </Button>
+          </Container>
         </Container>
         {Object.keys(message).length > 0 && (
           <Snackbar
