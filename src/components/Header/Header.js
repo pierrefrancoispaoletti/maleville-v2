@@ -171,8 +171,8 @@ const Header = ({
             <p>Adresse de livraison :</p>
             <address>
               <p>Maleville</p>
-              <p>66 rue Saint Dominique</p>
-              <span>75007</span> <span>Paris</span> <span>FR</span>
+              <p>112 rue Ambroise Croizat</p>
+              <span>93200</span> <span>Saint-Denis</span> <span>FR</span>
             </address>
           </AddressBlock>
         </div>

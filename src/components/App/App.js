@@ -62,6 +62,7 @@ const App = () => {
 
   const submitData = async (collId, typeDoc) => {
     let newState = { ...initialState };
+    let formData = new FormData();
     newState.projet = projet;
     newState.fournisseur = fournisseur;
     newState.articlesList = articlesList;
@@ -71,10 +72,12 @@ const App = () => {
     newState.reference = reference;
     setInitialState({ ...newState });
 
+    formData.append("data", JSON.stringify(newState));
+
     const response = await axios({
       method: "POST",
       url: `traitement.php?coll_id=${collId}&type_doc=${typeDoc}&edit=${edit}`,
-      data: newState,
+      data: formData,
     });
 
     const { data } = response;
